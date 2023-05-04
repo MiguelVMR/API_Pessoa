@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import com.api.api_rest.exceptions.ExceptionResponce;
-import com.api.api_rest.exceptions.UnsupportedMathOperationException;
+import com.api.api_rest.exceptions.ResourceNotFoundException;
 
 @ControllerAdvice
 @RestController
@@ -26,15 +26,15 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         
     }
 
-    @ExceptionHandler(UnsupportedMathOperationException.class)
-    public final  ResponseEntity <ExceptionResponce> handleBadRequestExcepitons(
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final  ResponseEntity <ExceptionResponce> handleNotFoundtExcepitons(
         Exception ex,WebRequest request) {
             ExceptionResponce exceptionResponce = new ExceptionResponce(
                 new Date(),
                  ex.getMessage(),
                  request.getDescription(false));
                  
-                 return new ResponseEntity<>(exceptionResponce,HttpStatus.BAD_REQUEST);
+                 return new ResponseEntity<>(exceptionResponce,HttpStatus.NOT_FOUND);
         
     }
 
