@@ -18,7 +18,7 @@ public class PersonServices {
     PersonRepository repository;
 
     public List<Person> findAll() {
-       
+        logger.info("Find all person");
 
         return repository.findAll();
     }
