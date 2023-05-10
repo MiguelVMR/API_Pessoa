@@ -4,7 +4,10 @@ import java.util.List;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.api.api_rest.data.vo.v1.PersonVO;
 import com.api.api_rest.exceptions.ResourceNotFoundException;
+import com.api.api_rest.mapper.DozerMapper;
 import com.api.api_rest.model.Person;
 import com.api.api_rest.repositories.PersonRepository;
 
@@ -17,28 +20,30 @@ public class PersonServices {
     @Autowired
     PersonRepository repository;
 
-    public List<Person> findAll() {
+    public List<PersonVO> findAll() {
         logger.info("Find all person");
 
-        return repository.findAll();
+        return DozerMapper.parseListObjects(repository.findAll(), PersonVO.class);
     }
 
-    public Person findById(Long id) {
+    public PersonVO findById(Long id) {
 
         logger.info("Find one person");
     
-        return repository.findById(id)
+        var entity= repository.findById(id)
         .orElseThrow(()-> new ResourceNotFoundException("No records found for this ID!"));
+        return DozerMapper.parseObject(entity, PersonVO.class);
     }
 
-    public Person create(Person person) {
+    public PersonVO create(PersonVO person) {
         
         logger.info("Create one person");
-
-        return repository.save(person);
+        var entity= DozerMapper.parseObject(person, Person.class);
+        var vo = DozerMapper.parseObject(repository.save(entity),PersonVO.class);
+        return vo;
     }
 
-    public Person update(Person person) {
+    public PersonVO update(PersonVO person) {
         
         logger.info("Updating one person");
        var entity = repository.findById(person.getId())
@@ -48,7 +53,8 @@ public class PersonServices {
         entity.setLastName(person.getLastName());
         entity.setAddres(person.getAddres());
         entity.setGender(person.getGender()); 
-        return repository.save(person);
+        var vo = DozerMapper.parseObject(repository.save(entity),PersonVO.class);
+        return vo;
     }
     public void delete(Long id) {
         var entity = repository.findById(id)
