@@ -1,9 +1,7 @@
-package com.api.api_rest.data.vo.v1;
-
+package com.api.api_rest.data.vo.v2;
 import java.io.Serializable;
-
-public class PersonVO implements Serializable {
-
+import java.util.Date;
+public class PersonVOV2 implements Serializable {
     private static final long serialVersionUID = 1L;
   
     private Long id;
@@ -20,7 +18,9 @@ public class PersonVO implements Serializable {
     
     private String gender;
 
-    public PersonVO() {
+    private Date birthDay;
+
+    public PersonVOV2() {
     }
 
     public Long getId() {
@@ -63,6 +63,14 @@ public class PersonVO implements Serializable {
         this.gender = gender;
     }
 
+    public Date getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(Date birthDay) {
+        this.birthDay = birthDay;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -72,6 +80,7 @@ public class PersonVO implements Serializable {
         result = prime * result + ((lastName == null) ? 0 : lastName.hashCode());
         result = prime * result + ((addres == null) ? 0 : addres.hashCode());
         result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+        result = prime * result + ((birthDay == null) ? 0 : birthDay.hashCode());
         return result;
     }
 
@@ -83,7 +92,7 @@ public class PersonVO implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        PersonVO other = (PersonVO) obj;
+        PersonVOV2 other = (PersonVOV2) obj;
         if (id == null) {
             if (other.id != null)
                 return false;
@@ -109,8 +118,13 @@ public class PersonVO implements Serializable {
                 return false;
         } else if (!gender.equals(other.gender))
             return false;
+        if (birthDay == null) {
+            if (other.birthDay != null)
+                return false;
+        } else if (!birthDay.equals(other.birthDay))
+            return false;
         return true;
     }
 
+    
 }
-
