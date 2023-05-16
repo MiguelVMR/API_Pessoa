@@ -16,7 +16,7 @@ import com.api.api_rest.data.vo.v1.PersonVO;
 import com.api.api_rest.services.PersonServices;
 
 @RestController
-@RequestMapping("/person")
+@RequestMapping("/api/person/v1")
 public class PersonController {
 
     @Autowired
