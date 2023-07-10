@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import com.api.api_rest.exceptions.ExceptionResponce;
+import com.api.api_rest.exceptions.RequiredObjectIsNullException;
 import com.api.api_rest.exceptions.ResourceNotFoundException;
 
 @ControllerAdvice
@@ -35,6 +36,17 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
                  request.getDescription(false));
                  
                  return new ResponseEntity<>(exceptionResponce,HttpStatus.NOT_FOUND);
+        
+    }
+    @ExceptionHandler(RequiredObjectIsNullException.class)
+    public final  ResponseEntity <ExceptionResponce> handleBadRequesttExcepitons(
+        Exception ex,WebRequest request) {
+            ExceptionResponce exceptionResponce = new ExceptionResponce(
+                new Date(),
+                 ex.getMessage(),
+                 request.getDescription(false));
+                 
+                 return new ResponseEntity<>(exceptionResponce,HttpStatus.BAD_REQUEST);
         
     }
 
